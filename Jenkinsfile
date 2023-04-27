@@ -26,7 +26,7 @@ pipeline {
                  git branch:"${params.BRANCH_GIT}",
                      url:"${params.URL_MOVIE}"
             }
-            post {
+            /*post {
                 success {
                     script {
                         if (params.CHOICE == 'JDK11'){
@@ -45,7 +45,7 @@ pipeline {
                     
                 }
 
-            }
+            }*/
 
         }
         stage('Compile') {
