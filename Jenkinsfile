@@ -9,8 +9,8 @@ Package mvn -DskipTests -Dmaven.test.skip package et si success archiveArtifacts
 pipeline {
     agent any
     parameters {
-        string(name: 'URL_MOVIE', defaultValue: 'https://github.com/matthcol/movieapp_jdbc.git', description: 'Link of url ')
-        string(name: 'BRANCH_GIT', defaultValue: 'main', description: 'branch of github link')
+        string(name: 'URL_MOVIE', defaultValue: '', description: 'Link of url ')
+        string(name: 'BRANCH_GIT', defaultValue: '', description: 'branch of github link')
     }
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
