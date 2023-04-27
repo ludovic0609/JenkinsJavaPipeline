@@ -46,7 +46,7 @@ pipeline {
             }
             post {
                 success {
-                     archiveArtifacts 'target/*.jar'
+                     archiveArtifacts 'target/*.[wj]ar'
                 }
 
             }
