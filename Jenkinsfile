@@ -26,6 +26,7 @@ pipeline {
                  git branch:"${params.BRANCH_GIT}",
                      url:"${params.URL_MOVIE}"
             }
+
             /*post {
                 success {
                     script {
@@ -48,7 +49,27 @@ pipeline {
             }*/
 
         }
+        stage('Config') {
+            when {
+                expression { params.CHOICE=='JDK11' }
+            }
+            steps {
+                sh "sed -i s@<maven.compiler.target>.*</maven.compiler.target>@<maven.compiler.target>11</maven.compiler.target>@ pom.xml"
+                sh "sed -i s@<maven.compiler.source>.*</maven.compiler.source>@<maven.compiler.source>11<maven.compiler.source>@ pom.xml"
+            }
+
+            when {
+                expression { params.CHOICE=='JDK17' }
+            }
+            steps {
+                sh "sed -i s@<maven.compiler.target>.*</maven.compiler.target>@<maven.compiler.target>17</maven.compiler.target>@ pom.xml"
+                sh "sed -i s@<maven.compiler.source>.*</maven.compiler.source>@<maven.compiler.source>17<maven.compiler.source>@ pom.xml"
+            }
+
+        }
         stage('Compile') {
+
+
             steps {
                 // Run Maven on a Unix agent.
                 sh "mvn clean compile"
