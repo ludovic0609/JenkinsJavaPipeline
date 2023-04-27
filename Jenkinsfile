@@ -51,17 +51,18 @@ pipeline {
         }
         stage('Config') {
             steps {
-                if(params.CHOICE=='JDK11'){
-                    sh "sed -i s@<maven.compiler.target>.*</maven.compiler.target>@<maven.compiler.target>11</maven.compiler.target>@ pom.xml"
-                    sh "sed -i s@<maven.compiler.source>.*</maven.compiler.source>@<maven.compiler.source>11<maven.compiler.source>@ pom.xml"
+                script {
+                    if("${params.CHOICE}"=='JDK11')
+                    {
+                        sh "sed -i s@<maven.compiler.target>.*</maven.compiler.target>@<maven.compiler.target>11</maven.compiler.target>@ pom.xml"
+                        sh "sed -i s@<maven.compiler.source>.*</maven.compiler.source>@<maven.compiler.source>11<maven.compiler.source>@ pom.xml"
+                    }
+                    if("${params.CHOICE}"=='JDK17'){
+                        sh "sed -i s@<maven.compiler.target>.*</maven.compiler.target>@<maven.compiler.target>17</maven.compiler.target>@ pom.xml"
+                        sh "sed -i s@<maven.compiler.source>.*</maven.compiler.source>@<maven.compiler.source>17<maven.compiler.source>@ pom.xml"
+                    }
                 }
-                else if(params.CHOICE=='JDK17'){
-                    sh "sed -i s@<maven.compiler.target>.*</maven.compiler.target>@<maven.compiler.target>17</maven.compiler.target>@ pom.xml"
-                    sh "sed -i s@<maven.compiler.source>.*</maven.compiler.source>@<maven.compiler.source>17<maven.compiler.source>@ pom.xml"
-                }else{
-
-                }
-
+               
             }
         }
         stage('Compile') {
