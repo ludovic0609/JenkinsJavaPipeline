@@ -11,10 +11,12 @@ pipeline {
     parameters {
         string(name: 'URL_MOVIE', defaultValue: '', description: 'Link of url ')
         string(name: 'BRANCH_GIT', defaultValue: '', description: 'branch of github link')
+        choice(name: 'CHOICE', choices: ['JDK11', 'JDK17'], description: 'JDK version of compiler  - build')
     }
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
+        jdk "${params.CHOICE}"
     }
 
     stages {
@@ -24,6 +26,34 @@ pipeline {
                  git branch:"${params.BRANCH_GIT}",
                      url:"${params.URL_MOVIE}"
             }
+            post {
+                when {
+                expression { 
+                params.CHOICE=='JDK11'
+                }
+            }
+            steps {
+                sh "sed -i 's/<maven.compiler.target>17<\/maven.compiler.target>/<maven.compiler.target>11<\/maven.compiler.target>
+                /g' pom.xml"
+                sh "sed -i 's/<maven.compiler.source>17<\/maven.compiler.source>/<maven.compiler.source>11<\/maven.compiler.source>
+                /g' pom.xml"
+            }
+
+            when {
+                expression { 
+                params.CHOICE=='JDK17'
+                }
+            }
+            steps {
+                sh "sed -i 's/<maven.compiler.target>11<\/maven.compiler.target>/<maven.compiler.target>17<\/maven.compiler.target>
+                /g' pom.xml"
+                sh "sed -i 's/<maven.compiler.source>11<\/maven.compiler.source>/<maven.compiler.source>17<\/maven.compiler.source>
+                /g' pom.xml"
+            }
+
+
+            }
+
         }
         stage('Compile') {
             steps {
