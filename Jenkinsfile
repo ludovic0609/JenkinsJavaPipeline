@@ -21,8 +21,8 @@ pipeline {
         stage('Git') {
             steps {
                 // Get some code from a GitHub repository
-                 git branch:${params.BRANCH_GIT},
-                     url:${params.URL_MOVIE}
+                 git branch:echo "${params.BRANCH_GIT}",
+                     url:echo "${params.URL_MOVIE}"
             }
         }
         stage('Compile') {
