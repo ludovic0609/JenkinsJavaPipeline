@@ -33,10 +33,8 @@ pipeline {
                 }
             }
             steps {
-                sh "sed -i 's/<maven.compiler.target>17<\/maven.compiler.target>/<maven.compiler.target>11<\/maven.compiler.target>
-                /g' pom.xml"
-                sh "sed -i 's/<maven.compiler.source>17<\/maven.compiler.source>/<maven.compiler.source>11<\/maven.compiler.source>
-                /g' pom.xml"
+               sh "sed -i s@<maven.compiler.target>.*</maven.compiler.target>@<maven.compiler.target>11</maven.compiler.target>@ pom.xml"
+                sh "sed -i s@<maven.compiler.source>.*</maven.compiler.source>@<maven.compiler.source>11<maven.compiler.source>@ pom.xml"
             }
 
             when {
@@ -45,10 +43,10 @@ pipeline {
                 }
             }
             steps {
-                sh "sed -i 's/<maven.compiler.target>11<\/maven.compiler.target>/<maven.compiler.target>17<\/maven.compiler.target>
-                /g' pom.xml"
-                sh "sed -i 's/<maven.compiler.source>11<\/maven.compiler.source>/<maven.compiler.source>17<\/maven.compiler.source>
-                /g' pom.xml"
+                sh "sed -i s@<maven.compiler.target>.*</maven.compiler.target>@<maven.compiler.target>17</maven.compiler.target>@ pom.xml"
+                sh "sed -i s@<maven.compiler.source>.*</maven.compiler.source>@<maven.compiler.source>17<maven.compiler.source>@ pom.xml"
+
+                
             }
 
 
